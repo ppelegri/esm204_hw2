@@ -1,0 +1,46 @@
+---
+title: "ESM 204 HW2"
+author: "Patrick Pelegri-O'Day"
+date: "4/14/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(here)
+library(tidyverse)
+library(janitor)
+```
+
+```{r}
+# Read in data
+water_raw <- read_csv(here('data', 'Water_Districts.csv'))
+
+water <- water_raw %>% clean_names()
+```
+
+```{r}
+# Define linear regression models
+kern_lm <- lm(mc_kern ~ reduction, data = water)
+mojave_lm <- lm(mc_mojave ~ reduction, data = water)
+antelope_lm <- lm(mc_antelope ~ reduction, data = water)
+ventura_lm <- lm(mc_ventura ~ reduction, data = water)
+```
+
+```{r}
+# Plot linear regression models
+ggplot(data = water) +
+  geom_line(aes(x = reduction, y = mc_kern), color = "azure3") +
+  geom_smooth(aes(x = reduction, y = mc_kern), method = "lm", se = FALSE, color = "firebrick4") +
+  geom_line(aes(x = reduction, y = mc_mojave), color = "azure3") +
+  geom_smooth(aes(x = reduction, y = mc_mojave), method = "lm", se = FALSE, color = "darkolivegreen4") +
+  geom_line(aes(x = reduction, y = mc_antelope), color = "azure3") +
+  geom_smooth(aes(x = reduction, y = mc_antelope), method = "lm", se = FALSE, color = "darkslategray4") +
+  geom_line(aes(x = reduction, y = mc_ventura), color = "azure3") +
+  geom_smooth(aes(x = reduction, y = mc_ventura), method = "lm", se = FALSE, color = "goldenrod4") +
+  theme_minimal() +
+  labs(x = "\nAbatement quantity",
+       y = "Marginal abatement cost\n")
+```
+
