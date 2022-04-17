@@ -33,12 +33,16 @@ ventura_lm <- lm(mc_ventura ~ reduction, data = water)
 ggplot(data = water) +
   geom_line(aes(x = reduction, y = mc_kern), color = "azure3") +
   geom_smooth(aes(x = reduction, y = mc_kern), method = "lm", se = FALSE, color = "firebrick4") +
+  
   geom_line(aes(x = reduction, y = mc_mojave), color = "azure3") +
   geom_smooth(aes(x = reduction, y = mc_mojave), method = "lm", se = FALSE, color = "darkolivegreen4") +
-  geom_line(aes(x = reduction, y = mc_antelope), color = "azure3") +
+ 
+   geom_line(aes(x = reduction, y = mc_antelope), color = "azure3") +
   geom_smooth(aes(x = reduction, y = mc_antelope), method = "lm", se = FALSE, color = "darkslategray4") +
-  geom_line(aes(x = reduction, y = mc_ventura), color = "azure3") +
+ 
+   geom_line(aes(x = reduction, y = mc_ventura), color = "azure3") +
   geom_smooth(aes(x = reduction, y = mc_ventura), method = "lm", se = FALSE, color = "goldenrod4") +
+  
   theme_minimal() +
   labs(x = "\nAbatement quantity",
        y = "Marginal abatement cost\n")
