@@ -61,8 +61,9 @@ Using the same method, we find the following demand curves for the remaining wat
 Ventura: y = 436.67 - 1.79x (total use = 245 AF)
 Mojave: y = 532.71 - 3.83x (total use = 140 AF)
 Antelope: y = 629.14 - 2.86x (total use = 220 AF)
+
 ```{r}
-# Extrapolate MC abatement curves to abating last AF of initial water use
+# Find intecepts of MC abatement curves to calculate demand curves
 kern_tidy <- tidy(kern_lm)
 kern_tidy
 
@@ -74,5 +75,14 @@ mojave_tidy
 
 ventura_tidy <- tidy(ventura_lm)
 ventura_tidy
+```
+
+```{r}
+# Define demand curves
+kern_demand <- function(AF_used){
+  AF_price <- AF_used*-2.25 + 340
+}
+
+ggplot(kern_demand, from = 0, to = 150)
 ```
 
