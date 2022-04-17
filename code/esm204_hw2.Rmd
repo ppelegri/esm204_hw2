@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(here)
 library(tidyverse)
 library(janitor)
+library(broom)
 ```
 
 ```{r}
@@ -29,6 +30,9 @@ ventura_lm <- lm(mc_ventura ~ reduction, data = water)
 ```
 
 ```{r}
+# TO DO
+# - Pivot water data longer so that district is a variable, then plot regressions using color = district
+
 # Plot linear regression models
 ggplot(data = water) +
   geom_line(aes(x = reduction, y = mc_kern), color = "azure3") +
@@ -44,7 +48,30 @@ ggplot(data = water) +
   geom_smooth(aes(x = reduction, y = mc_ventura), method = "lm", se = FALSE, color = "goldenrod4") +
   
   theme_minimal() +
-  labs(x = "\nAbatement quantity",
-       y = "Marginal abatement cost\n")
+  labs(x = "\nAbatement quantity (AF)",
+       y = "Marginal abatement cost (USD) \n")
+```
+
+Kern's equation is y = 3.74 + 2.25x
+Kern's predicted abatement MC is 340 USD for the 150th unit of abatement
+Thus, the y-intercept for Kern's demand curve for water is 340 USD, and the slope of Kern's demand curve is -2.25x. Kern's demand curve: y = 340 - 2.25x.
+
+Using the same method, we find the following demand curves for the remaining water districts
+
+Ventura: y = 436.67 - 1.79
+Mojave: y = 532.71 - 
+```{r}
+# Extrapolate MC abatement curves to abating last AF of initial water use
+kern_tidy <- tidy(kern_lm)
+kern_tidy
+
+antelope_tidy <- tidy(antelope_lm)
+antelope_tidy
+
+mojave_tidy <- tidy(mojave_lm)
+mojave_tidy
+
+ventura_tidy <- tidy(ventura_lm)
+ventura_tidy
 ```
 
