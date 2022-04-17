@@ -58,8 +58,9 @@ Thus, the y-intercept for Kern's demand curve for water is 340 USD, and the slop
 
 Using the same method, we find the following demand curves for the remaining water districts
 
-Ventura: y = 436.67 - 1.79
-Mojave: y = 532.71 - 
+Ventura: y = 436.67 - 1.79x (total use = 245 AF)
+Mojave: y = 532.71 - 3.83x (total use = 140 AF)
+Antelope: y = 629.14 - 2.86x (total use = 220 AF)
 ```{r}
 # Extrapolate MC abatement curves to abating last AF of initial water use
 kern_tidy <- tidy(kern_lm)
