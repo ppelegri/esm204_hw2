@@ -77,6 +77,8 @@ ventura_tidy <- tidy(ventura_lm)
 ventura_tidy
 ```
 
+### Question 2: Demand curves
+
 ```{r}
 # Define demand curves
 kern_demand <- function(AF_used){
@@ -86,3 +88,15 @@ kern_demand <- function(AF_used){
 ggplot(kern_demand, from = 0, to = 150)
 ```
 
+Antelope's demand curve for water use has the highest y-intercept. In other words, Antelope water district is willing to pay the most out of any water district for the first AF of water use.
+
+### Question 3: Policy interventions
+a) Cap without trade
+  1. x(220 + 140 + 150 + 245) = 500 --> x = 0.662
+  3. find the magnitude of reduction for each county. take the integral from 0 to that reduction for each integral using that district's marginal cost abatement curve
+  2. Add all these together
+  4. No tax revenue generated
+  
+b) Tax on water use
+  1. Stack the demand curves vertically. Find out what y is when x = 500. Set tax = to that y.
+  2. 
