@@ -23,10 +23,10 @@ water <- water_raw %>% clean_names()
 
 ```{r}
 # Define linear regression models
-kern_lm <- lm(mc_kern ~ reduction, data = water)
-mojave_lm <- lm(mc_mojave ~ reduction, data = water)
-antelope_lm <- lm(mc_antelope ~ reduction, data = water)
-ventura_lm <- lm(mc_ventura ~ reduction, data = water)
+kern_lm <- lm(mc_kern ~ 0 + reduction, data = water)
+mojave_lm <- lm(mc_mojave ~ 0 + reduction, data = water)
+antelope_lm <- lm(mc_antelope ~ 0 + reduction, data = water)
+ventura_lm <- lm(mc_ventura ~ 0 + reduction, data = water)
 ```
 
 ```{r}
@@ -52,15 +52,15 @@ ggplot(data = water) +
        y = "Marginal abatement cost (USD) \n")
 ```
 
-Kern's equation is y = 3.74 + 2.25x
+Kern's equation is y = 3.74 + 2.29x
 Kern's predicted abatement MC is 340 USD for the 150th unit of abatement
 Thus, the y-intercept for Kern's demand curve for water is 340 USD, and the slope of Kern's demand curve is -2.25x. Kern's demand curve: y = 340 - 2.25x.
 
 Using the same method, we find the following demand curves for the remaining water districts
 
 Ventura: y = 436.67 - 1.79x (total use = 245 AF)
-Mojave: y = 532.71 - 3.83x (total use = 140 AF)
-Antelope: y = 629.14 - 2.86x (total use = 220 AF)
+Mojave: y = 532.71 - 3.8x (total use = 140 AF)
+Antelope: y = 629.14 - 1.78x (total use = 220 AF)
 
 ```{r}
 # Find intecepts of MC abatement curves to calculate demand curves
