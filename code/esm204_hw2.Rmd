@@ -22,35 +22,144 @@ water <- water_raw %>% clean_names()
 ```
 
 ```{r}
+# No longer using this approach. Making the df longer allowed the curves' x-intercepts to be visible on the graph, but I'm no longer trying to do that because the wrangling is more complicated when the df is pivoted longer
+
+# # Make the data frame longer and extend water$reduction
+# empty_df <- data.frame(matrix(ncol = 6, nrow = 115))
+# colnames(empty_df) <- c('x1', 'reduction', 'mc_kern', 'mc_mojave', 'mc_antelope', 'mc_ventura')
+# water <- rbind(water, empty_df)
+# water$reduction <- seq(0, 255, by = 1)
+```
+
+```{r}
+# Pivot data frame longer to make district a variable
+water <- water %>% 
+  rename(kern = mc_kern,
+         mojave = mc_mojave,
+         antelope = mc_antelope,
+         ventura = mc_ventura) %>% 
+  pivot_longer(!(x1:reduction), names_to = 'district', values_to = 'mc')
+```
+
+```{r}
 # Define linear regression models
-kern_lm <- lm(mc_kern ~ 0 + reduction, data = water)
-mojave_lm <- lm(mc_mojave ~ 0 + reduction, data = water)
-antelope_lm <- lm(mc_antelope ~ 0 + reduction, data = water)
-ventura_lm <- lm(mc_ventura ~ 0 + reduction, data = water)
+water_kern <- water %>% filter(district == 'kern')
+kern_lm <- lm(mc ~ 0 + reduction, data = water_kern)
+
+water_mojave <- water %>% filter(district == 'mojave')
+mojave_lm <- lm(mc ~ 0 + reduction, data = water_mojave)
+
+water_antelope <- water %>% filter(district == 'antelope')
+antelope_lm <- lm(mc ~ 0 + reduction, data = water_antelope)
+
+water_ventura <- water %>% filter(district == 'ventura')
+ventura_lm <- lm(mc ~ 0 + reduction, data = water_ventura)
 ```
 
 ```{r}
 # Find slopes
-slope_kern <- kern_lm$coefficient[1]
-slope_mojave <- mojave_lm$coefficient[1]
-slope_antelope <- antelope_lm$coefficient[1]
-slope_ventura <- ventura_lm$coefficient[1]
+kern_slope <- kern_lm$coefficient[1]
+mojave_slope <- mojave_lm$coefficient[1]
+antelope_slope <- antelope_lm$coefficient[1]
+ventura_slope <- ventura_lm$coefficient[1]
 ```
 
 ```{r}
-# Create vector of predicted MCs for each district
-water$mc_kern_predict <- water$reduction * slope_kern
-water$mc_mojave_predict <- water$reduction * slope_mojave
-water$mc_antelope_predict <- water$reduction * slope_antelope
-water$mc_ventura_predict <- water$reduction * slope_ventura
+# Make df of slopes and add to main df
+kern_slope_v <- c(rep(kern_slope, 141))
+mojave_slope_v <- c(rep(kern_slope, 141))
+antelope_slope_v <- c(rep(kern_slope, 141))
+ventura_slope_v <- c(rep(kern_slope, 141))
+
+slope_df <- data.frame(kern_slope_v, 
+                       mojave_slope_v,
+                       antelope_slope_v,
+                       ventura_slope_v) %>% 
+  rename(kern = kern_slope_v,
+         mojave = mojave_slope_v,
+         antelope = antelope_slope_v,
+         ventura = ventura_slope_v) %>% 
+  pivot_longer(kern:ventura,
+               names_to = 'district',
+               values_to = 'slope')
+
+slope_df <- slope_df %>% 
+  mutate(case_when(
+    district = 'kern' ~ baseline = 150
+  ))
+
+water$slope <- slope_df$slope
 ```
 
 
+```{r}
+# Create predicted MC curves
+kern_predict <- predict(kern_lm)
+mojave_predict <- predict(mojave_lm)
+antelope_predict <- predict(antelope_lm)
+ventura_predict <- predict(ventura_lm)
+```
 
-- Predict: predicted_mc = B*seq(0, 150, increment = 1)
-- Create data set: predicted MC = B * abatement quantity
-- Have a column for abatement quantity
-- Have a column for demand that is baseline - abatement quantity
+```{r}
+# Turn predicted MC curves into a data frame
+mc_predict_df <- data.frame(kern_predict, mojave_predict, antelope_predict, ventura_predict) %>% 
+  rename(kern = kern_predict,
+         mojave = mojave_predict,
+         antelope = antelope_predict,
+         ventura = ventura_predict) %>% 
+  pivot_longer(kern:ventura, names_to = 'district', values_to = 'mc_predict')
+
+# Add predicted MC curves to our water data frame
+water$mc_predict <- mc_predict_df$mc_predict
+```
+
+```{r}
+# This is old code from before I pivoted longer
+
+# # Create vector of predicted MCs for each district
+# water$mc_predict <- water$reduction * kern_slope
+# water$mc_mojave_predict <- water$reduction * mojave_slope
+# water$mc_antelope_predict <- water$reduction * antelope_slope
+# water$mc_ventura_predict <- water$reduction * ventura_slope
+```
+              
+```{r}
+# Demand curve
+water <- water %>% 
+  mutate(demand = slope*(baseline - reduction))
+
+# Create demand column for each district
+water$kern_demand <- kern_slope*(150 - water$reduction)
+water$mojave_demand <- mojave_slope*(140 - water$reduction)
+water$antelope_demand <- antelope_slope*(220 - water$reduction)
+water$ventura_demand <- ventura_slope*(245 - water$reduction)
+```
+
+```{r}
+# Plot MC curves
+ggplot(data = water, aes(x = reduction, y = mc_predict, color = district)) +
+  geom_line()
+```
+
+
+```{r}
+# Plot demand curves
+ggplot(data = water, aes(x = reduction)) +
+  geom_line(aes(y = kern_demand, color = district)) +
+  geom_line(aes(y = mojave_demand, color = district)) +
+  geom_line(aes(y = antelope_demand, color = district)) +
+  geom_line(aes(y = ventura_demand, color = district)) +
+  ylim(0, NA) +
+  labs(y = 'USD per acre-foot', x = 'Acre-feet used')
+```
+
+- Calculate MC curves: MC = slope (from regression) * Q
+  - Get in terms of Q = 1/slope * P
+  - Add up so Q = (1/slope_A + 1/slope_B) * P
+  - Set that Q = to desired cap --> you get P*
+  - Each firm will produce a Q where MC = P*
+
+
 
 ```{r}
 # TO DO
