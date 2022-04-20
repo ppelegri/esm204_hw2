@@ -30,6 +30,29 @@ ventura_lm <- lm(mc_ventura ~ 0 + reduction, data = water)
 ```
 
 ```{r}
+# Find slopes
+slope_kern <- kern_lm$coefficient[1]
+slope_mojave <- mojave_lm$coefficient[1]
+slope_antelope <- antelope_lm$coefficient[1]
+slope_ventura <- ventura_lm$coefficient[1]
+```
+
+```{r}
+# Create vector of predicted MCs for each district
+water$mc_kern_predict <- water$reduction * slope_kern
+water$mc_mojave_predict <- water$reduction * slope_mojave
+water$mc_antelope_predict <- water$reduction * slope_antelope
+water$mc_ventura_predict <- water$reduction * slope_ventura
+```
+
+
+
+- Predict: predicted_mc = B*seq(0, 150, increment = 1)
+- Create data set: predicted MC = B * abatement quantity
+- Have a column for abatement quantity
+- Have a column for demand that is baseline - abatement quantity
+
+```{r}
 # TO DO
 # - Pivot water data longer so that district is a variable, then plot regressions using color = district
 
@@ -98,5 +121,7 @@ a) Cap without trade
   4. No tax revenue generated
   
 b) Tax on water use
-  1. Stack the demand curves vertically. Find out what y is when x = 500. Set tax = to that y.
-  2. 
+  1. Horizontally sum your MC abatement curves
+  2. Where that horizontally summed curve reaches the desired abatement curve, you will have your price
+  3. Where that price level intersects each MC abatement curve, you will have the efficient abatement quantity for each district to achieve the desired total abatement level.
+
