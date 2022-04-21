@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE, message = FALSE, warning = FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 library(here)
 library(tidyverse)
@@ -125,15 +125,40 @@ water <- water %>%
   mutate(demand = slope*(baseline - reduction))
 ```
 
+### Question 1
+
 ```{r}
-# Plot MC curves and demand curves
+# Plot MC curves
 ggplot(data = water, aes(x = reduction, color = district)) +
-  geom_line(aes(y = mc_predict)) + # plot MC curve
-  geom_line(aes(y = demand))
+  geom_line(aes(y = mc_predict)) 
 ```
 
+### Question 2
 
+```{r}
+# Plot demand curve
+ggplot(data = water, aes(x = reduction, color = district)) +
+geom_line(aes(y = demand))
+```
 
+Based on the graph, the Antelope water district is willing to pay the most for the first acre-foot of water.
+
+### Question 3
+
+#### Cap without trade
+
+  1. Let x = the magnitude of the fraction that each district's water use will be reduced to.
+  x(220 + 140 + 150 + 245) = 500
+  **x = 0.662**. Each district will reduce its use until current use is 0.662 of baseline use. I.e., each district will reduce its current use by a factor of 0.338.
+  2. The total cost of meeting this target is found by summing the costs for each district, found in part (3) below, which equals $21,207.89 USD
+  3. The cost for each district is found by taking the integral under their marginal cost abatement curve from 0 to the amount by which they reduced their use.
+    A) **Kern:** integral_0^50.7 2.29 x dx = **$2943.21** USD
+    B) **Mojave:** integral_0^47.32 3.8dx = **$4254.45** USD
+    C) **Antelope:** integral_0^74.36 2.86 x dx = **$7907.06** USD
+    D) **Ventura:** integral_0^82.81 1.78 x dx = **$6103.17** USD
+  4. No tax revenue is generated because no tax is levied.
+  
+#### Tax on water use
 
 - Calculate MC curves: MC = slope (from regression) * Q
   - Get in terms of Q = 1/slope * P
@@ -181,23 +206,23 @@ ggplot(data = water, aes(x = reduction, color = district)) +
 # TO DO
 # - Pivot water data longer so that district is a variable, then plot regressions using color = district
 
-# Plot linear regression models
-ggplot(data = water) +
-  geom_line(aes(x = reduction, y = mc_kern), color = "azure3") +
-  geom_smooth(aes(x = reduction, y = mc_kern), method = "lm", se = FALSE, color = "firebrick4") +
-  
-  geom_line(aes(x = reduction, y = mc_mojave), color = "azure3") +
-  geom_smooth(aes(x = reduction, y = mc_mojave), method = "lm", se = FALSE, color = "darkolivegreen4") +
- 
-   geom_line(aes(x = reduction, y = mc_antelope), color = "azure3") +
-  geom_smooth(aes(x = reduction, y = mc_antelope), method = "lm", se = FALSE, color = "darkslategray4") +
- 
-   geom_line(aes(x = reduction, y = mc_ventura), color = "azure3") +
-  geom_smooth(aes(x = reduction, y = mc_ventura), method = "lm", se = FALSE, color = "goldenrod4") +
-  
-  theme_minimal() +
-  labs(x = "\nAbatement quantity (AF)",
-       y = "Marginal abatement cost (USD) \n")
+# # Plot linear regression models
+# ggplot(data = water) +
+#   geom_line(aes(x = reduction, y = mc_kern), color = "azure3") +
+#   geom_smooth(aes(x = reduction, y = mc_kern), method = "lm", se = FALSE, color = "firebrick4") +
+#   
+#   geom_line(aes(x = reduction, y = mc_mojave), color = "azure3") +
+#   geom_smooth(aes(x = reduction, y = mc_mojave), method = "lm", se = FALSE, color = "darkolivegreen4") +
+#  
+#    geom_line(aes(x = reduction, y = mc_antelope), color = "azure3") +
+#   geom_smooth(aes(x = reduction, y = mc_antelope), method = "lm", se = FALSE, color = "darkslategray4") +
+#  
+#    geom_line(aes(x = reduction, y = mc_ventura), color = "azure3") +
+#   geom_smooth(aes(x = reduction, y = mc_ventura), method = "lm", se = FALSE, color = "goldenrod4") +
+#   
+#   theme_minimal() +
+#   labs(x = "\nAbatement quantity (AF)",
+#        y = "Marginal abatement cost (USD) \n")
 ```
 
 Kern's equation is y = 3.74 + 2.29x
@@ -212,29 +237,20 @@ Antelope: y = 629.14 - 1.78x (total use = 220 AF)
 
 ```{r}
 # Find intecepts of MC abatement curves to calculate demand curves
-kern_tidy <- tidy(kern_lm)
-kern_tidy
-
-antelope_tidy <- tidy(antelope_lm)
-antelope_tidy
-
-mojave_tidy <- tidy(mojave_lm)
-mojave_tidy
-
-ventura_tidy <- tidy(ventura_lm)
-ventura_tidy
+# kern_tidy <- tidy(kern_lm)
+# kern_tidy
+# 
+# antelope_tidy <- tidy(antelope_lm)
+# antelope_tidy
+# 
+# mojave_tidy <- tidy(mojave_lm)
+# mojave_tidy
+# 
+# ventura_tidy <- tidy(ventura_lm)
+# ventura_tidy
 ```
 
 ### Question 2: Demand curves
-
-```{r}
-# Define demand curves
-kern_demand <- function(AF_used){
-  AF_price <- AF_used*-2.25 + 340
-}
-
-ggplot(kern_demand, from = 0, to = 150)
-```
 
 Antelope's demand curve for water use has the highest y-intercept. In other words, Antelope water district is willing to pay the most out of any water district for the first AF of water use.
 
