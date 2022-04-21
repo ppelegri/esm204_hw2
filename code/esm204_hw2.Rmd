@@ -67,9 +67,9 @@ ventura_slope <- ventura_lm$coefficient[1]
 ```{r}
 # Make df of slopes and add to main df
 kern_slope_v <- c(rep(kern_slope, 141))
-mojave_slope_v <- c(rep(kern_slope, 141))
-antelope_slope_v <- c(rep(kern_slope, 141))
-ventura_slope_v <- c(rep(kern_slope, 141))
+mojave_slope_v <- c(rep(mojave_slope, 141))
+antelope_slope_v <- c(rep(antelope_slope, 141))
+ventura_slope_v <- c(rep(ventura_slope, 141))
 
 slope_df <- data.frame(kern_slope_v, 
                        mojave_slope_v,
@@ -83,14 +83,20 @@ slope_df <- data.frame(kern_slope_v,
                names_to = 'district',
                values_to = 'slope')
 
+# Create baseline use numbers
 slope_df <- slope_df %>% 
-  mutate(case_when(
-    district = 'kern' ~ baseline = 150
+  mutate(baseline = case_when(
+    district == 'kern' ~ 150,
+    district == 'mojave' ~ 140,
+    district == 'antelope' ~ 220,
+    district == 'ventura' ~ 245
   ))
 
-water$slope <- slope_df$slope
-```
+# Add slope and baseline per district to main df
 
+water$slope <- slope_df$slope
+water$baseline <- slope_df$baseline
+```
 
 ```{r}
 # Create predicted MC curves
@@ -112,9 +118,33 @@ mc_predict_df <- data.frame(kern_predict, mojave_predict, antelope_predict, vent
 # Add predicted MC curves to our water data frame
 water$mc_predict <- mc_predict_df$mc_predict
 ```
+              
+```{r}
+# Create demand curve
+water <- water %>% 
+  mutate(demand = slope*(baseline - reduction))
+```
 
 ```{r}
-# This is old code from before I pivoted longer
+# Plot MC curves and demand curves
+ggplot(data = water, aes(x = reduction, color = district)) +
+  geom_line(aes(y = mc_predict)) + # plot MC curve
+  geom_line(aes(y = demand))
+```
+
+
+
+
+- Calculate MC curves: MC = slope (from regression) * Q
+  - Get in terms of Q = 1/slope * P
+  - Add up so Q = (1/slope_A + 1/slope_B) * P
+  - Set that Q = to desired cap --> you get P*
+  - Each firm will produce a Q where MC = P*
+
+
+
+```{r}
+# CREATE MC CURVES - PRE-PIVOT LONGER
 
 # # Create vector of predicted MCs for each district
 # water$mc_predict <- water$reduction * kern_slope
@@ -122,42 +152,28 @@ water$mc_predict <- mc_predict_df$mc_predict
 # water$mc_antelope_predict <- water$reduction * antelope_slope
 # water$mc_ventura_predict <- water$reduction * ventura_slope
 ```
-              
-```{r}
-# Demand curve
-water <- water %>% 
-  mutate(demand = slope*(baseline - reduction))
-
-# Create demand column for each district
-water$kern_demand <- kern_slope*(150 - water$reduction)
-water$mojave_demand <- mojave_slope*(140 - water$reduction)
-water$antelope_demand <- antelope_slope*(220 - water$reduction)
-water$ventura_demand <- ventura_slope*(245 - water$reduction)
-```
 
 ```{r}
-# Plot MC curves
-ggplot(data = water, aes(x = reduction, y = mc_predict, color = district)) +
-  geom_line()
+# CREATE DEMAND CURVES = PRE-PIVOT LONGER
+
+# # Create demand column for each district - PRE-PIVOT-LONGER
+# water$kern_demand <- kern_slope*(150 - water$reduction)
+# water$mojave_demand <- mojave_slope*(140 - water$reduction)
+# water$antelope_demand <- antelope_slope*(220 - water$reduction)
+# water$ventura_demand <- ventura_slope*(245 - water$reduction)
 ```
 
 
 ```{r}
-# Plot demand curves
-ggplot(data = water, aes(x = reduction)) +
-  geom_line(aes(y = kern_demand, color = district)) +
-  geom_line(aes(y = mojave_demand, color = district)) +
-  geom_line(aes(y = antelope_demand, color = district)) +
-  geom_line(aes(y = ventura_demand, color = district)) +
-  ylim(0, NA) +
-  labs(y = 'USD per acre-foot', x = 'Acre-feet used')
+# # Plot demand curves - PRE-PIVOT-LONGER
+# ggplot(data = water, aes(x = reduction)) +
+#   geom_line(aes(y = kern_demand, color = district)) +
+#   geom_line(aes(y = mojave_demand, color = district)) +
+#   geom_line(aes(y = antelope_demand, color = district)) +
+#   geom_line(aes(y = ventura_demand, color = district)) +
+#   ylim(0, NA) +
+#   labs(y = 'USD per acre-foot', x = 'Acre-feet used')
 ```
-
-- Calculate MC curves: MC = slope (from regression) * Q
-  - Get in terms of Q = 1/slope * P
-  - Add up so Q = (1/slope_A + 1/slope_B) * P
-  - Set that Q = to desired cap --> you get P*
-  - Each firm will produce a Q where MC = P*
 
 
 
