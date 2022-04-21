@@ -38,21 +38,27 @@ water <- water %>%
          mojave = mc_mojave,
          antelope = mc_antelope,
          ventura = mc_ventura) %>% 
-  pivot_longer(!(x1:reduction), names_to = 'district', values_to = 'mc')
+  pivot_longer(!(x1:reduction), names_to = 'district', values_to = 'mc') %>% 
+  mutate(district = case_when(
+    district == 'kern' ~ 'Kern',
+    district == 'mojave' ~ 'Mojave',
+    district == 'antelope' ~ 'Antelope',
+    district == 'ventura' ~ 'Ventura'
+  ))
 ```
 
 ```{r}
 # Define linear regression models
-water_kern <- water %>% filter(district == 'kern')
+water_kern <- water %>% filter(district == 'Kern')
 kern_lm <- lm(mc ~ 0 + reduction, data = water_kern)
 
-water_mojave <- water %>% filter(district == 'mojave')
+water_mojave <- water %>% filter(district == 'Mojave')
 mojave_lm <- lm(mc ~ 0 + reduction, data = water_mojave)
 
-water_antelope <- water %>% filter(district == 'antelope')
+water_antelope <- water %>% filter(district == 'Antelope')
 antelope_lm <- lm(mc ~ 0 + reduction, data = water_antelope)
 
-water_ventura <- water %>% filter(district == 'ventura')
+water_ventura <- water %>% filter(district == 'Ventura')
 ventura_lm <- lm(mc ~ 0 + reduction, data = water_ventura)
 ```
 
@@ -130,7 +136,11 @@ water <- water %>%
 ```{r}
 # Plot MC curves
 ggplot(data = water, aes(x = reduction, color = district)) +
-  geom_line(aes(y = mc_predict)) 
+  geom_line(aes(y = mc_predict), size = 0.8) + 
+  scale_color_manual(values = c('firebrick4','darkolivegreen4', 'darkslategray4', 'goldenrod4')) +
+  geom_line(aes(y = mc), alpha = 0.3) +
+  labs(x = '\n Acre-feet abated', y = 'Marginal cost of abatement\n', color = 'Water district') + 
+  theme_minimal()
 ```
 
 ### Question 2
@@ -138,7 +148,10 @@ ggplot(data = water, aes(x = reduction, color = district)) +
 ```{r}
 # Plot demand curve
 ggplot(data = water, aes(x = reduction, color = district)) +
-geom_line(aes(y = demand))
+geom_line(aes(y = demand), size = 0.8) + 
+  scale_color_manual(values = c('firebrick4','darkolivegreen4', 'darkslategray4', 'goldenrod4')) +
+  labs(x = '\n Acre-feet abated', y = 'Marginal cost of abatement\n', color = 'Water district') + 
+  theme_minimal()
 ```
 
 Based on the graph, the Antelope water district is willing to pay the most for the first acre-foot of water.
@@ -147,24 +160,58 @@ Based on the graph, the Antelope water district is willing to pay the most for t
 
 #### Cap without trade
 
-  1. Let x = the magnitude of the fraction that each district's water use will be reduced to.
+  - **Stringency:** Let x = the magnitude of the fraction that each district's water use will be reduced to.
   x(220 + 140 + 150 + 245) = 500
   **x = 0.662**. Each district will reduce its use until current use is 0.662 of baseline use. I.e., each district will reduce its current use by a factor of 0.338.
-  2. The total cost of meeting this target is found by summing the costs for each district, found in part (3) below, which equals $21,207.89 USD
-  3. The cost for each district is found by taking the integral under their marginal cost abatement curve from 0 to the amount by which they reduced their use.
-    A) **Kern:** integral_0^50.7 2.29 x dx = **$2943.21** USD
-    B) **Mojave:** integral_0^47.32 3.8dx = **$4254.45** USD
-    C) **Antelope:** integral_0^74.36 2.86 x dx = **$7907.06** USD
-    D) **Ventura:** integral_0^82.81 1.78 x dx = **$6103.17** USD
-  4. No tax revenue is generated because no tax is levied.
+  - **Total cost:** The total cost of meeting this target is found by summing the costs for each district, found in part (3) below, which equals $21,207.89 USD
+  - **Per-district cost:**  The cost for each district is found by taking the integral under their marginal cost abatement curve from 0 to the amount by which they reduced their use.
+    - **Kern:** integral_0^50.7 2.29 x dx = **$2943.21 USD**
+    - **Mojave:** integral_0^47.32 3.8dx = **$4254.45 USD**
+    - **Antelope:** integral_0^74.36 2.86 x dx = **$7907.06 USD**
+    - **Ventura:** integral_0^82.81 1.78 x dx = **$6103.17 USD**
+  - **Tax revenue:** No tax revenue is generated because no tax is levied.
   
 #### Tax on water use
+  - **Stringency:** First we horizontally sum the marginal cost of abatement curves.
+    - MC_kern = 2.29 * Q_kern. --> Q_kern = 1/2.29 MC_kern.
+    - Extending this logic and rewriting MC as P, Q_total = (1/2.29 + 1/3.8 + 1/2.86 + 1/1.78) * P --> Q_total = 1.61P
+    - Now we set Q_total equal to our desired reduction of 255. Q_total = 255 = 1.61P
+    - Solving for P, we find that each firm will produce a Q where their MC of abatement = P* = **$158.39 USD**, which is the size of the tax.
+  - **Total cost:** The integral of the horizontally summed marginal cost of abatement curves from 0 to 255 AF abated: integral_0^255 x/1.61 dx = **$20,194.10 USD** - ***SHOULD THIS INCLUDE THE COST OF THE TAX?? NEED CLARIFICATION***
+  - **Cost per district:** First we need to find how much each district abates. We do this by finding the quantity of abatement associated with a MC_abatement of $158.39. Then we take the integral of each district's MC_abatement curve from 0 to the quantity of AF abated.
+    - **Kern:** Q_kern = 1/2.29 * MC_kern --> 69.17 AF abated
+    Integral: integral_0^69.17 2.29 x dx = **$5478.24 USD**
+    - **Mojave:** Q_mojave = 1/3.8 * MC_mojave --> 41.68 AF abated
+    Integral: integral_0^41.68 3.8 x dx = **$3300.72 USD**
+    - **Antelope:** Q_antelope = 1/2.86 * MC_antelope --> 55.38 AF abated
+    Integral: integral_0^55.38 2.86 x dx = **$4385.73 USD**
+    - **Ventura:** Q_ventura = 1/1.78 * MC_ventura --> 88.98 AF abated
+    Integral: integral_0^88.98 1.78 x dx = **$7046.52 USD**
+  - **Tax revenue:** Tax revenue is the tax rate times the quantity abated. 158.39 USD/AF * 255 AF = **$40,389.45 USD**
+  
+#### Cap and trade
+ - **Water use after trade:** The districts will trade AF abated until their marginal costs of abatement are equal. For a total abatement of 255 AF, the equimarginal principle tells us that the marginal cost of abatement for each district under a cap and trade scheme will be $158.39 USD, the same MC value derived from setting the summed horizontal MC curves = to the abatement quantity when calculating the tax stringency above. The quantity of abatement and marginal cost of last unit abated pre- and post-trade is provided for each water district below:
+    - **Kern:** Q_pre = 50.7 AF abated, MC_pre = 116.10 USD; Q_post = 69.17 AF abated, MC_post = 158.39 USD.
+   - **Mojave:** Q_pre = 47.32 AF abated, MC_pre = 179.82 USD; Q_post = 41.68 AF abated, MC_post = 158.39 USD
+   - **Antelope:** Q_pre = 74.36 AF abated, MC_pre = 212.73 USD; Q_post = 55.38 AF abated, MC_post = 158.39 USD
+   - **Ventura:** Q_pre = 82.81 AF abated, MC_pre = 147.40 USD; Q_post = 88.98 AF abated, MC_post = 158.39 USD
+ - **Stringency:** The overall fraction of AF reduced from baseline remains the same: 0.338. The fraction by which each district's use is reduced is given below:
+    - **Kern:** Percentage abated post-trade = 69.17/150 = **46.1% reduction**
+    - **Mojave:** Percentage abated post-trade = 41.68/140 = **29.8% reduction**
+    - **Antelope:** Percentage abated post-trade = 55.38/220 = **25.2% reduction**
+    - **Ventura:** Percentage abated post-trade = 88.98/245 = **36.3% reduction**
+- **Total cost:** Using our horizontally summed marginal cost curve and a marginal cost of abatement of 158.39 USD, we find a total cost of **20,194.10 USD**
+- **Cost per district:** Using a marginal cost of abatement of 158.39 USD for each district, the cost of abatement per district is below. I assume that water districts who abated less post-trade than pre-trade bought water use rights from other water districts at a rate of 158.39 USD per AF of water. I add or subtract the value of the AF traded to the total cost each district pays based on whether they bought rights to use water and thus abated less post-trade or sold rights to use water and abated more post-trade.
+    - **Kern:** cost of abatement post trade = 5478.24 USD. Kern abated an additional 69.17-50.7 = 18.47 AF of water post-trade. Kern is assumed to have sold these rights to another district for a total sum of 18.47 AF * 158.39 USD/AF = 2925.46 USD. Thus Kern water district's net costs are 5478.24 USD - 2925.46 USD = **2552.78 USD**
+    - **Mojave:** cost of abatement post trade  = 3300.72 USD. Mojave abated 47.32-41.68 = 5.64 AF less water post-trade. Mojave is assumed to have bought these rights to use additional water from another district for a total sum of 5.64 AF * 158.39 USD/AF = 893.32 USD. Thus Kern water district's net costs are 3300.72 USD + 893.32 USD = **4194.04 USD**
+    - **Antelope:** cost of abatement post trade  = 4385.73 USD. Antelope abated 74.36-55.38 = 18.98 AF less water post-trade. Antelope is assumed to have bought these rights to use additional water from another district for a total sum of 18.98 AF * 158.39 USD/AF = 3006.24 USD. Thus Kern water district's net costs are 4385.73 USD + 3006.24 USD = **7391.97 USD**
+    - **Ventura:** cost of abatement post trade  = 7046.52 USD. Ventura abated an additional 88.98-82.81 = 6.17 AF of water post-trade. Ventura is assumed to have sold these rights to another district for a total sum of 6.17 AF * 158.39 USD/AF = 977.27 USD. Thus Ventura water district's net costs are 7046.52 USD - 977.27 USD = **6069.25 USD**
+- **Tax revenue:** There is no tax revenue from the policy as it is currently formulated. An approach not taken here that would generate revenue would be if the government were to charge water users for rights to use water, then allow trade among the rights holders.
+ 
+  
 
-- Calculate MC curves: MC = slope (from regression) * Q
-  - Get in terms of Q = 1/slope * P
-  - Add up so Q = (1/slope_A + 1/slope_B) * P
-  - Set that Q = to desired cap --> you get P*
-  - Each firm will produce a Q where MC = P*
+
+
 
 
 
@@ -225,16 +272,6 @@ Based on the graph, the Antelope water district is willing to pay the most for t
 #        y = "Marginal abatement cost (USD) \n")
 ```
 
-Kern's equation is y = 3.74 + 2.29x
-Kern's predicted abatement MC is 340 USD for the 150th unit of abatement
-Thus, the y-intercept for Kern's demand curve for water is 340 USD, and the slope of Kern's demand curve is -2.25x. Kern's demand curve: y = 340 - 2.25x.
-
-Using the same method, we find the following demand curves for the remaining water districts
-
-Ventura: y = 436.67 - 1.79x (total use = 245 AF)
-Mojave: y = 532.71 - 3.8x (total use = 140 AF)
-Antelope: y = 629.14 - 1.78x (total use = 220 AF)
-
 ```{r}
 # Find intecepts of MC abatement curves to calculate demand curves
 # kern_tidy <- tidy(kern_lm)
@@ -249,20 +286,4 @@ Antelope: y = 629.14 - 1.78x (total use = 220 AF)
 # ventura_tidy <- tidy(ventura_lm)
 # ventura_tidy
 ```
-
-### Question 2: Demand curves
-
-Antelope's demand curve for water use has the highest y-intercept. In other words, Antelope water district is willing to pay the most out of any water district for the first AF of water use.
-
-### Question 3: Policy interventions
-a) Cap without trade
-  1. x(220 + 140 + 150 + 245) = 500 --> x = 0.662
-  3. find the magnitude of reduction for each county. take the integral from 0 to that reduction for each integral using that district's marginal cost abatement curve
-  2. Add all these together
-  4. No tax revenue generated
-  
-b) Tax on water use
-  1. Horizontally sum your MC abatement curves
-  2. Where that horizontally summed curve reaches the desired abatement curve, you will have your price
-  3. Where that price level intersects each MC abatement curve, you will have the efficient abatement quantity for each district to achieve the desired total abatement level.
 
