@@ -1,7 +1,7 @@
 ---
 title: "ESM 204 HW2"
-author: "Patrick Pelegri-O'Day"
-date: "4/14/2022"
+author: "Patrick Pelegri-O'Day, Eva Wilson, and Thomas Lenihan"
+date: "4/21/2022"
 output: html_document
 ---
 
@@ -208,10 +208,36 @@ Based on the graph, the Antelope water district is willing to pay the most for t
     - **Ventura:** cost of abatement post trade  = 7046.52 USD. Ventura abated an additional 88.98-82.81 = 6.17 AF of water post-trade. Ventura is assumed to have sold these rights to another district for a total sum of 6.17 AF * 158.39 USD/AF = 977.27 USD. Thus Ventura water district's net costs are 7046.52 USD - 977.27 USD = **6069.25 USD**
 - **Tax revenue:** There is no tax revenue from the policy as it is currently formulated. An approach not taken here that would generate revenue would be if the government were to charge water users for rights to use water, then allow trade among the rights holders.
  
+### Question 4
+
+#### Cap without trade
+
+magnitude of the fraction each county must reduce water usage by is 300AF/500AF = **0.6**. Each district will reduce water usage by a factor of 0.4. 
+
+**Per district cost of abatement:** Found by taking the integral under the marginal cost abatement curves from zero to the necessary reduction in water use.
+
+  - **Kern:** integral_0^39.72 2.29 x dx = **$1806.44 USD**
+  - **Mojave:** integral_0^37.07 3.8 x dx = **$2611.23 USD**
+  - **Antelope:** integral_0^58.26 2.86 x dx = **$4853.08 USD**
+  - **Ventura:** integral_0^64.88 1.78 x dx = **$3745.92 USD**
+
+#### Tax on water use
+
+**Per district cost of abatement:** 
+
+  - **Kern:**
+  - **Mojave:**
+  - **Antelope:** 
+  - **Ventura:**
   
+#### Cap and trade
 
+**Per district cost of abatement:** 
 
-
+  - **Kern:**
+  - **Mojave:**
+  - **Antelope:** 
+  - **Ventura:**
 
 
 
