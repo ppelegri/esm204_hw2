@@ -163,12 +163,12 @@ Based on the graph, the Antelope water district is willing to pay the most for t
   - **Stringency:** Let x = the magnitude of the fraction that each district's water use will be reduced to.
   x(220 + 140 + 150 + 245) = 500 
   **x = 0.662**. Each district will reduce its use until current use is 0.662 of baseline use. I.e., each district will reduce its current use by a factor of 0.338.
-  - **Total cost:** The total cost of meeting this target is found by summing the costs for each district, found in part (3) below, which equals **$21,207.89 USD**
+  - **Total cost:** The total cost of meeting this target is found by summing the costs for each district, found in part (3) below, which equals **21,207.89 USD**
   - **Per-district cost:**  The cost for each district is found by taking the integral under their marginal cost abatement curve from 0 to the amount by which they reduced their use.
-    - **Kern:** integral_0^50.7 2.29 x dx = **$2943.21 USD**
-    - **Mojave:** integral_0^47.32 3.8dx = **$4254.45 USD**
-    - **Antelope:** integral_0^74.36 2.86 x dx = **$7907.06 USD**
-    - **Ventura:** integral_0^82.81 1.78 x dx = **$6103.17 USD**
+    - **Kern:** integral_0^50.7 2.29 x dx = **2943.21 USD**
+    - **Mojave:** integral_0^47.32 3.8dx = **4254.45 USD**
+    - **Antelope:** integral_0^74.36 2.86 x dx = **7907.06 USD**
+    - **Ventura:** integral_0^82.81 1.78 x dx = **6103.17 USD**
   - **Tax revenue:** No tax revenue is generated because no tax is levied.
   
 #### Tax on water use
@@ -176,36 +176,38 @@ Based on the graph, the Antelope water district is willing to pay the most for t
     - MC_kern = 2.29 * Q_kern. --> Q_kern = 1/2.29 MC_kern.
     - Extending this logic and rewriting MC as P, Q_total = (1/2.29 + 1/3.8 + 1/2.86 + 1/1.78) * P --> Q_total = 1.61P
     - Now we set Q_total equal to our desired reduction of 255. Q_total = 255 = 1.61P
-    - Solving for P, we find that each firm will produce a Q where their MC of abatement = P* = **$158.39 USD**, which is the size of the tax.
-  - **Total cost:** The integral of the horizontally summed marginal cost of abatement curves from 0 to 255 AF abated: integral_0^255 x/1.61 dx = **$20,194.10 USD** - ***SHOULD THIS INCLUDE THE COST OF THE TAX?? NEED CLARIFICATION--if so new total would be $60,583.55??***
+    - Solving for P, we find that each firm will produce a Q where their MC of abatement = P* = **158.39 USD**, which is the size of the tax.
+  - **Total cost:** The integral of the horizontally summed marginal cost of abatement curves from 0 to 255 AF abated: integral_0^255 x/1.61 dx = 20,194.10 USD total cost = 20,194.10 + 40,389.45 = **60,583.55 USD**
   - **Cost per district:** First we need to find how much each district abates. We do this by finding the quantity of abatement associated with a MC_abatement of $158.39. Then we take the integral of each district's MC_abatement curve from 0 to the quantity of AF abated.
     - **Kern:** Q_kern = 1/2.29 * MC_kern --> 69.17 AF abated
-    Integral: integral_0^69.17 2.29 x dx = **$5478.24 USD**
+    Integral: integral_0^69.17 2.29 x dx = **5,478.24 USD**
     - **Mojave:** Q_mojave = 1/3.8 * MC_mojave --> 41.68 AF abated
-    Integral: integral_0^41.68 3.8 x dx = **$3300.72 USD**
+    Integral: integral_0^41.68 3.8 x dx = **3,300.72 USD**
     - **Antelope:** Q_antelope = 1/2.86 * MC_antelope --> 55.38 AF abated
-    Integral: integral_0^55.38 2.86 x dx = **$4385.73 USD**
+    Integral: integral_0^55.38 2.86 x dx = **4,385.73 USD**
     - **Ventura:** Q_ventura = 1/1.78 * MC_ventura --> 88.98 AF abated
-    Integral: integral_0^88.98 1.78 x dx = **$7046.52 USD**
-  - **Tax revenue:** Tax revenue is the tax rate times the quantity abated. 158.39 USD/AF * 255 AF = **$40,389.45 USD**
+    Integral: integral_0^88.98 1.78 x dx = **7,046.52 USD**
+  - **Tax revenue:** Tax revenue is the tax rate times the quantity abated. 158.39 USD/AF * 255 AF = **40,389.45 USD**
   
 #### Cap and trade
  - **Water use after trade:** The districts will trade AF abated until their marginal costs of abatement are equal. For a total abatement of 255 AF, the equimarginal principle tells us that the marginal cost of abatement for each district under a cap and trade scheme will be $158.39 USD, the same MC value derived from setting the summed horizontal MC curves = to the abatement quantity when calculating the tax stringency above. The quantity of abatement and marginal cost of last unit abated pre- and post-trade is provided for each water district below:
-    - **Kern:** Q_pre = 50.7 AF abated, MC_pre = 116.10 USD; Q_post = 69.17 AF abated, MC_post = 158.39 USD.
-   - **Mojave:** Q_pre = 47.32 AF abated, MC_pre = 179.82 USD; Q_post = 41.68 AF abated, MC_post = 158.39 USD
-   - **Antelope:** Q_pre = 74.36 AF abated, MC_pre = 212.73 USD; Q_post = 55.38 AF abated, MC_post = 158.39 USD
-   - **Ventura:** Q_pre = 82.81 AF abated, MC_pre = 147.40 USD; Q_post = 88.98 AF abated, MC_post = 158.39 USD
- - **Stringency:** The overall fraction of AF reduced from baseline remains the same: 0.338. The fraction by which each district's use is reduced is given below:
+  - **Kern:** Q_pre = 50.7 AF abated, MC_pre = 116.10 USD; Q_post = 69.17 AF abated, MC_post = 158.39 USD.
+  - **Mojave:** Q_pre = 47.32 AF abated, MC_pre = 179.82 USD; Q_post = 41.68 AF abated, MC_post = 158.39 USD
+  - **Antelope:** Q_pre = 74.36 AF abated, MC_pre = 212.73 USD; Q_post = 55.38 AF abated, MC_post = 158.39 USD
+  - **Ventura:** Q_pre = 82.81 AF abated, MC_pre = 147.40 USD; Q_post = 88.98 AF abated, MC_post = 158.39 USD
+  
+- **Stringency:** The overall fraction of AF reduced from baseline remains the same: 0.338. The fraction by which each district's use is reduced is given below:
     - **Kern:** Percentage abated post-trade = 69.17/150 = **46.1% reduction**
     - **Mojave:** Percentage abated post-trade = 41.68/140 = **29.8% reduction**
     - **Antelope:** Percentage abated post-trade = 55.38/220 = **25.2% reduction**
     - **Ventura:** Percentage abated post-trade = 88.98/245 = **36.3% reduction**
 - **Total cost:** Using our horizontally summed marginal cost curve and a marginal cost of abatement of 158.39 USD, we find a total cost of **20,194.10 USD**
+
 - **Cost per district:** Using a marginal cost of abatement of 158.39 USD for each district, the cost of abatement per district is below. I assume that water districts who abated less post-trade than pre-trade bought water use rights from other water districts at a rate of 158.39 USD per AF of water. I add or subtract the value of the AF traded to the total cost each district pays based on whether they bought rights to use water and thus abated less post-trade or sold rights to use water and abated more post-trade.
-    - **Kern:** cost of abatement post trade = 5478.24 USD. Kern abated an additional 69.17-50.7 = 18.47 AF of water post-trade. Kern is assumed to have sold these rights to another district for a total sum of 18.47 AF * 158.39 USD/AF = 2925.46 USD. Thus Kern water district's net costs are 5478.24 USD - 2925.46 USD = **2552.78 USD**
-    - **Mojave:** cost of abatement post trade  = 3300.72 USD. Mojave abated 47.32-41.68 = 5.64 AF less water post-trade. Mojave is assumed to have bought these rights to use additional water from another district for a total sum of 5.64 AF * 158.39 USD/AF = 893.32 USD. Thus Kern water district's net costs are 3300.72 USD + 893.32 USD = **4194.04 USD**
-    - **Antelope:** cost of abatement post trade  = 4385.73 USD. Antelope abated 74.36-55.38 = 18.98 AF less water post-trade. Antelope is assumed to have bought these rights to use additional water from another district for a total sum of 18.98 AF * 158.39 USD/AF = 3006.24 USD. Thus Kern water district's net costs are 4385.73 USD + 3006.24 USD = **7391.97 USD**
-    - **Ventura:** cost of abatement post trade  = 7046.52 USD. Ventura abated an additional 88.98-82.81 = 6.17 AF of water post-trade. Ventura is assumed to have sold these rights to another district for a total sum of 6.17 AF * 158.39 USD/AF = 977.27 USD. Thus Ventura water district's net costs are 7046.52 USD - 977.27 USD = **6069.25 USD**
+    - **Kern:** cost of abatement post trade = 5478.24 USD. Kern abated an additional 69.17-50.7 = 18.47 AF of water post-trade. Kern is assumed to have sold these rights to another district for a total sum of 18.47 AF * 158.39 USD/AF = 2925.46 USD. Thus Kern water district's net costs are 5478.24 USD - 2925.46 USD = **2,552.78 USD**
+    - **Mojave:** cost of abatement post trade  = 3300.72 USD. Mojave abated 47.32-41.68 = 5.64 AF less water post-trade. Mojave is assumed to have bought these rights to use additional water from another district for a total sum of 5.64 AF * 158.39 USD/AF = 893.32 USD. Thus Mojave water district's net costs are 3300.72 USD + 893.32 USD = **4,194.04 USD**
+    - **Antelope:** cost of abatement post trade  = 4385.73 USD. Antelope abated 74.36-55.38 = 18.98 AF less water post-trade. Antelope is assumed to have bought these rights to use additional water from another district for a total sum of 18.98 AF * 158.39 USD/AF = 3006.24 USD. Thus Antelope water district's net costs are 4385.73 USD + 3006.24 USD = **7,391.97 USD**
+    - **Ventura:** cost of abatement post trade  = 7046.52 USD. Ventura abated an additional 88.98-82.81 = 6.17 AF of water post-trade. Ventura is assumed to have sold these rights to another district for a total sum of 6.17 AF * 158.39 USD/AF = 977.27 USD. Thus Ventura water district's net costs are 7046.52 USD - 977.27 USD = **6,069.25 USD**
 - **Tax revenue:** There is no tax revenue from the policy as it is currently formulated. An approach not taken here that would generate revenue would be if the government were to charge water users for rights to use water, then allow trade among the rights holders.
  
 ### Question 4
@@ -216,28 +218,76 @@ magnitude of the fraction each county must reduce water usage by is 300AF/500AF 
 
 **Per district cost of abatement:** Found by taking the integral under the marginal cost abatement curves from zero to the necessary reduction in water use.
 
-  - **Kern:** integral_0^39.72 2.29 x dx = **$1806.44 USD**
-  - **Mojave:** integral_0^37.07 3.8 x dx = **$2611.23 USD**
-  - **Antelope:** integral_0^58.26 2.86 x dx = **$4853.08 USD**
-  - **Ventura:** integral_0^64.88 1.78 x dx = **$3745.92 USD**
+  - **Kern:** integral_0^39.72 2.29 x dx = **1,806.44 USD**
+  - **Mojave:** integral_0^37.07 3.8 x dx = **2,611.23 USD**
+  - **Antelope:** integral_0^58.26 2.86 x dx = **4,853.08 USD**
+  - **Ventura:** integral_0^64.88 1.78 x dx = **3,745.92 USD**
 
 #### Tax on water use
 
+**Stringency:** First, we horizontally sum the marginal cost of abatement curves.
+Per 3B above, Q_total = **1.61P**
+-
+Now, we set Q_total equal to our desired reduction of (500-300) = 200 AF
+Q_total = 200 = 1.61P
+
+**Cost per district:** First, we need to find how much each district abates under new drought conditions. We do this by finding the quantity of abatement associated with a MC_abatement of $124.22. Then, we take the integral of each district’s MC_abatement curve from 0 to the quantity of AF abated.
+
 **Per district cost of abatement:** 
 
-  - **Kern:**
-  - **Mojave:**
-  - **Antelope:** 
-  - **Ventura:**
+  - **Kern:** Q_kern =  1/2.29 * MC_kern = 1/2.29 * 124.22 54.24 AF abated
+Integral: integral_0^54.24 2.29 x dx = **3,368.56 USD**
+
+  - **Mojave:** Q_mojave = 1/3.8 * MC_mojave = 1/3.8 * 124.22 32.69 AF abated
+Integral: integral_0^32.69  3.8 x dx = **2,030.41 USD**
+
+  - **Antelope:** Q_antelope = 1/2.86 * MC_antelope = 1/2.86 * 124.22 43.43 AF abated
+Integral: integral_0^43.43 2.86 x dx = **2,697.22 USD**
+
+  - **Ventura:** Q_ventura = 1/1.78 * MC__ventura = 1/1.78 * 124.22 69.79 AF
+Integral: integral_0^69.79 1.78 x dx = **4,334.87 USD**
+
   
 #### Cap and trade
 
+**Kern:** Q_pre = 50.7 AF abated, MC_pre = 116.10 USD; Q_post = 54.24 AF, MC_post = 124.22 USD
+**Mojave:** Q_pre = 47.23 AF abated, MC_pre = 179.82 USD; Q_post = 32.69 AF abated, MC_post = 124.22 USD
+**Antelope:** Q_pre = 74.36 AF abated, MC_pre = 212.73 USD; Q_post = 43.43 AF, MC_post = 124.22 USD
+**Ventura:** Q_pre = 82.81 AF abated, MC_pre = 147.40 USD; Q_post = 69.79 AF, Q_post = 124.22 USD
+
 **Per district cost of abatement:** 
 
-  - **Kern:**
-  - **Mojave:**
-  - **Antelope:** 
-  - **Ventura:**
+-**Kern:** cost of abatement with drought = 3368.56 USD. Kern abated an additional 54.24- 50.7 = 3.54 AF of water with drought. Kern is assumed to have sold these rights to another district for a total sum of 3.54 AF * 124.22 USD/AF = 439.74 USD. Thus, Kern water district’s net costs are 3368.56 - 439.74 = **2,928.82 USD** 
+
+-**Mojave:** cost of abatement with drought = 2030.41 USD. Mojave abated 47.23 AF - 32.69 AF  = 14.54 AF less water post-trade. Mojave is assumed to have bought these rights to use additional water from another district for a total sum of 14.54 AF * 124.22 USD/AF = 1806.12 USD. Thus, Mojave’s water district’s net costs are 2030.41 USD + 1806.12 USD = **3,836.53 USD**
+
+-**Antelope:** cost of abatement post trade = 2697.22 USD. Antelope abated 74.36 AF - 43.43 AF = 30.93 AF less water post-trade. Antelope is assumed to have bought these rights to use additional water from another district for a total sum of 30.93 AF * 124.22 USD/AF = 3842.12. Thus, Antelope water district’s net costs are 2697.22 + 3842.12 = **6,539.34 USD**
+
+-**Ventura:** cost of abatement post trade = 4334.87 USD. Ventura abated 82.81 AF - 69.79 AF = 13.02 AF less water post-trade. Ventura is assumed to have bought these rights to use additional water from another district for a total sum of 13.02 AF * 124.22 USD/AF = 1617.34 USD. Thus, Ventura water district’s net costs are 4334.87 + 1617.34 = **5,952.21 USD**. 
+
+#### Total costs of each policy scenario
+
+**Kern:** 
+-Cap w/o trade: $2,943.21 USD + 1,806.44 USD = **4,749.65 USD**
+-Tax: 5,478.24 USD + 3,368.56 = 8,846.80 USD
+-Cap and trade: 2,552.78 USD + 2,928.82 USD = 5,481.60 USD
+
+**Mojave:**
+-Cap w/o trade: $4254.45 USD + 2,611.23 USD = 6,865.68 USD
+-Tax: 3,300.72 USD + 2,030.41 USD = **5,331.13 USD**
+-Cap and trade: 4,194.04 USD + 3,836.53 USD = 8,030.57 USD
+
+**Antelope:**
+-Cap w/o trade: 7,907.06 USD + 4,853.08 USD = 12,760.14 USD
+-Tax: 4,385.73 USD + 2,697.22 USD = **7,082.95 USD**
+-Cap and trade: 7,391.97 USD + 6,539.34 USD = 13,931.31 USD
+
+**Ventura:** 
+-Cap w/o trade: 6,103.17 USD + 3,745.92 USD = **9,849.09 USD**
+-Tax: 7,046.52 USD + 4,334.87 USD = 11,381.39 USD
+-Cap and trade: 6,069.25 USD + 5,952.21 USD = 12,021.46 USD
+
+
 
 
 
