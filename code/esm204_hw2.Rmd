@@ -251,7 +251,7 @@ Integral: integral_0^69.79 1.78 x dx = **4,334.87 USD**
 
 #### Total costs of each policy scenario
 
-Scenarios in bold are the lowest cost outcomes for each district. Considering the entire reduction (755 AF -300 AF), Antelope and Mojave counties would prefer a single tax on water use, while Kern and Ventura counties would prefer a cap on water use without trading across districts. However, county preferences could change based on how water rights are allocated to each district. In this scenario, rights were reduced by a common fraction across all districts, but if some counties were given more water rights than others (e.g., the highest consumers were given the right to more water and did not have to purchase them) overall costs to the districts could be lower with a cap and trade scenario, due to lower costs from a reduction in overall purchasing of water rights. 
+Scenarios in bold are the lowest cost outcomes for each district. Considering the entire reduction (755 AF -300 AF), Antelope and Mojave counties would prefer a single tax on water use, while Kern and Ventura counties would prefer a cap on water use without trading across districts. However, county preferences could change based on how water rights are allocated to each district. In this scenario, rights were reduced by a common fraction across all districts, but if some counties were given more water rights than others (e.g., the highest consumers were given the right to a higher proportion of their initial water use), overall costs to those districts would be lower under a cap and trade scenario because they would have to abate less water use, and those districts would be more likely to prefer a cap and trade approach. 
 
 **Kern:** 
   
