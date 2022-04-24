@@ -22,16 +22,6 @@ water <- water_raw %>% clean_names()
 ```
 
 ```{r}
-# No longer using this approach. Making the df longer allowed the curves' x-intercepts to be visible on the graph, but I'm no longer trying to do that because the wrangling is more complicated when the df is pivoted longer
-
-# # Make the data frame longer and extend water$reduction
-# empty_df <- data.frame(matrix(ncol = 6, nrow = 115))
-# colnames(empty_df) <- c('x1', 'reduction', 'mc_kern', 'mc_mojave', 'mc_antelope', 'mc_ventura')
-# water <- rbind(water, empty_df)
-# water$reduction <- seq(0, 255, by = 1)
-```
-
-```{r}
 # Pivot data frame longer to make district a variable
 water <- water %>% 
   rename(kern = mc_kern,
@@ -177,17 +167,17 @@ Based on the graph, the Antelope water district is willing to pay the most for t
     - Extending this logic and rewriting MC as P, Q_total = (1/2.29 + 1/3.8 + 1/2.86 + 1/1.78) * P --> Q_total = 1.61P
     - Now we set Q_total equal to our desired reduction of 255. Q_total = 255 = 1.61P
     - Solving for P, we find that each firm will produce a Q where their MC of abatement = P* = **158.39 USD**, which is the size of the tax.
-  - **Total cost:** The integral of the horizontally summed marginal cost of abatement curves from 0 to 255 AF abated: integral_0^255 x/1.61 dx = 20,194.10 USD total cost = 20,194.10 + 40,389.45 = **60,583.55 USD**
-  - **Cost per district:** First we need to find how much each district abates. We do this by finding the quantity of abatement associated with a MC_abatement of $158.39. Then we take the integral of each district's MC_abatement curve from 0 to the quantity of AF abated.
+  - **Total cost:** The total cost will equal the cost of abatement + the cost of paying taxes on the water used. The integral of the horizontally summed marginal cost of abatement curves from 0 to 255 AF abated is integral_0^255 x/1.61 dx = 20,194.10 USD. The cost of paying taxes on water used is 158.39 USD/AF * 500 AF used = 79,195 USD. Thus the total cost = 20,194.10 + 79,195 = **99,389.10 USD**
+  - **Cost per district:** First we need to find how much each district abates. We do this by finding the quantity of abatement associated with a MC_abatement of $158.39. Then we take the integral of each district's MC_abatement curve from 0 to the quantity of AF abated. Finally we add the amount each district pays in taxes on the water they use.
     - **Kern:** Q_kern = 1/2.29 * MC_kern --> 69.17 AF abated
-    Integral: integral_0^69.17 2.29 x dx = **5,478.24 USD**
+    Integral: integral_0^69.17 2.29 x dx = 5,478.24 USD. Taxes paid = 158.39 USD/AF * (150-69.17) AF = 12,802.66 USD. Thus the total cost to Kern is 5,478.24 + 12,802.66 = **18,280.90 USD**
     - **Mojave:** Q_mojave = 1/3.8 * MC_mojave --> 41.68 AF abated
-    Integral: integral_0^41.68 3.8 x dx = **3,300.72 USD**
+    Integral: integral_0^41.68 3.8 x dx = 3,300.72 USD. Taxes paid = 158.39 USD/AF * (140-41.68) AF = 15,572.91 USD. Thus the total cost to Mojave is 3,300.72 + 15,572.91 = **18,873.63 USD**
     - **Antelope:** Q_antelope = 1/2.86 * MC_antelope --> 55.38 AF abated
-    Integral: integral_0^55.38 2.86 x dx = **4,385.73 USD**
+    Integral: integral_0^55.38 2.86 x dx = 4,385.73 USD. Taxes paid = 158.39 USD/AF * (220-55.38) AF = 26,074.16. Thus the total cost to Antelope is **30,459.89 USD**.
     - **Ventura:** Q_ventura = 1/1.78 * MC_ventura --> 88.98 AF abated
-    Integral: integral_0^88.98 1.78 x dx = **7,046.52 USD**
-  - **Tax revenue:** Tax revenue is the tax rate times the quantity abated. 158.39 USD/AF * 255 AF = **40,389.45 USD**
+    Integral: integral_0^88.98 1.78 x dx = 7,046.52 USD. Taxes paid = 158.39 USD/AF * (245-88.98) AF = 24,712.01 USD. Thus the total cost to Ventura is 7,046.52 + 24,712.01 = **31,758.53 USD**.
+  - **Tax revenue:** Tax revenue is the tax rate times the quantity of water used. 158.39 USD/AF * 500 AF = **79,195 USD**
   
 #### Cap and trade
  - **Water use after trade:** The districts will trade AF abated until their marginal costs of abatement are equal. For a total abatement of 255 AF, the equimarginal principle tells us that the marginal cost of abatement for each district under a cap and trade scheme will be $158.39 USD, the same MC value derived from setting the summed horizontal MC curves = to the abatement quantity when calculating the tax stringency above. The quantity of abatement and marginal cost of last unit abated pre- and post-trade is provided for each water district below:
@@ -254,41 +244,51 @@ Integral: integral_0^69.79 1.78 x dx = **4,334.87 USD**
 
 **Per district cost of abatement:** 
 
--**Kern:** cost of abatement with drought = 3368.56 USD. Kern abated an additional 54.24- 50.7 = 3.54 AF of water with drought. Kern is assumed to have sold these rights to another district for a total sum of 3.54 AF * 124.22 USD/AF = 439.74 USD. Thus, Kern water district’s net costs are 3368.56 - 439.74 = **2,928.82 USD** 
-
--**Mojave:** cost of abatement with drought = 2030.41 USD. Mojave abated 47.23 AF - 32.69 AF  = 14.54 AF less water post-trade. Mojave is assumed to have bought these rights to use additional water from another district for a total sum of 14.54 AF * 124.22 USD/AF = 1806.12 USD. Thus, Mojave’s water district’s net costs are 2030.41 USD + 1806.12 USD = **3,836.53 USD**
-
--**Antelope:** cost of abatement post trade = 2697.22 USD. Antelope abated 74.36 AF - 43.43 AF = 30.93 AF less water post-trade. Antelope is assumed to have bought these rights to use additional water from another district for a total sum of 30.93 AF * 124.22 USD/AF = 3842.12. Thus, Antelope water district’s net costs are 2697.22 + 3842.12 = **6,539.34 USD**
-
--**Ventura:** cost of abatement post trade = 4334.87 USD. Ventura abated 82.81 AF - 69.79 AF = 13.02 AF less water post-trade. Ventura is assumed to have bought these rights to use additional water from another district for a total sum of 13.02 AF * 124.22 USD/AF = 1617.34 USD. Thus, Ventura water district’s net costs are 4334.87 + 1617.34 = **5,952.21 USD**. 
+ - **Kern:** cost of abatement with drought = 3368.56 USD. Kern abated an additional 54.24- 50.7 = 3.54 AF of water with drought. Kern is assumed to have sold these rights to another district for a total sum of 3.54 AF * 124.22 USD/AF = 439.74 USD. Thus, Kern water district’s net costs are 3368.56 - 439.74 = **2,928.82 USD** 
+ - **Mojave:** cost of abatement with drought = 2030.41 USD. Mojave abated 47.23 AF - 32.69 AF  = 14.54 AF less water post-trade. Mojave is assumed to have bought these rights to use additional water from another district for a total sum of 14.54 AF * 124.22 USD/AF = 1806.12 USD. Thus, Mojave’s water district’s net costs are 2030.41 USD + 1806.12 USD = **3,836.53 USD**
+ - **Antelope:** cost of abatement post trade = 2697.22 USD. Antelope abated 74.36 AF - 43.43 AF = 30.93 AF less water post-trade. Antelope is assumed to have bought these rights to use additional water from another district for a total sum of 30.93 AF * 124.22 USD/AF = 3842.12. Thus, Antelope water district’s net costs are 2697.22 + 3842.12 = **6,539.34 USD**
+ - **Ventura:** cost of abatement post trade = 4334.87 USD. Ventura abated 82.81 AF - 69.79 AF = 13.02 AF less water post-trade. Ventura is assumed to have bought these rights to use additional water from another district for a total sum of 13.02 AF * 124.22 USD/AF = 1617.34 USD. Thus, Ventura water district’s net costs are 4334.87 + 1617.34 = **5,952.21 USD**. 
 
 #### Total costs of each policy scenario
 
 Scenarios in bold are the lowest cost outcomes for each district. Considering the entire reduction (755 AF -300 AF), Antelope and Mojave counties would prefer a single tax on water use, while Kern and Ventura counties would prefer a cap on water use without trading across districts. However, county preferences could change based on how water rights are allocated to each district. In this scenario, rights were reduced by a common fraction across all districts, but if some counties were given more water rights than others (e.g., the highest consumers were given the right to more water and did not have to purchase them) overall costs to the districts could be lower with a cap and trade scenario, due to lower costs from a reduction in overall purchasing of water rights. 
 
 **Kern:** 
-  -**Cap w/o trade:** $2,943.21 USD + 1,806.44 USD = **4,749.65 USD**
-  -Tax: 5,478.24 USD + 3,368.56 = 8,846.80 USD
-  -Cap and trade: 2,552.78 USD + 2,928.82 USD = 5,481.60 USD
+  
+  - **Cap w/o trade:** $2,943.21 USD + 1,806.44 USD = **4,749.65 USD**
+  - Tax: 5,478.24 USD + 3,368.56 = 8,846.80 USD
+  - Cap and trade: 2,552.78 USD + 2,928.82 USD = 5,481.60 USD
 
 **Mojave:**
-  -Cap w/o trade: $4254.45 USD + 2,611.23 USD = 6,865.68 USD
-  -**Tax:** 3,300.72 USD + 2,030.41 USD = **5,331.13 USD**
-  -Cap and trade: 4,194.04 USD + 3,836.53 USD = 8,030.57 USD
+  
+  - Cap w/o trade: $4254.45 USD + 2,611.23 USD = 6,865.68 USD
+  - **Tax:** 3,300.72 USD + 2,030.41 USD = **5,331.13 USD**
+  - Cap and trade: 4,194.04 USD + 3,836.53 USD = 8,030.57 USD
 
 **Antelope:**
-  -Cap w/o trade: 7,907.06 USD + 4,853.08 USD = 12,760.14 USD
-  -**Tax:** 4,385.73 USD + 2,697.22 USD = **7,082.95 USD**
-  -Cap and trade: 7,391.97 USD + 6,539.34 USD = 13,931.31 USD
+ 
+  - Cap w/o trade: 7,907.06 USD + 4,853.08 USD = 12,760.14 USD
+  - **Tax:** 4,385.73 USD + 2,697.22 USD = **7,082.95 USD**
+  - Cap and trade: 7,391.97 USD + 6,539.34 USD = 13,931.31 USD
 
 **Ventura:** 
-  -**Cap w/o trade:** 6,103.17 USD + 3,745.92 USD = **9,849.09 USD**
-  -Tax: 7,046.52 USD + 4,334.87 USD = 11,381.39 USD
-  -Cap and trade: 6,069.25 USD + 5,952.21 USD = 12,021.46 USD
+ 
+  - **Cap w/o trade:** 6,103.17 USD + 3,745.92 USD = **9,849.09 USD**
+  - Tax: 7,046.52 USD + 4,334.87 USD = 11,381.39 USD
+  - Cap and trade: 6,069.25 USD + 5,952.21 USD = 12,021.46 USD
 
 
 
 
+```{r}
+# No longer using this approach. Making the df longer allowed the curves' x-intercepts to be visible on the graph, but I'm no longer trying to do that because the wrangling is more complicated when the df is pivoted longer
+
+# # Make the data frame longer and extend water$reduction
+# empty_df <- data.frame(matrix(ncol = 6, nrow = 115))
+# colnames(empty_df) <- c('x1', 'reduction', 'mc_kern', 'mc_mojave', 'mc_antelope', 'mc_ventura')
+# water <- rbind(water, empty_df)
+# water$reduction <- seq(0, 255, by = 1)
+```
 
 ```{r}
 # CREATE MC CURVES - PRE-PIVOT LONGER
