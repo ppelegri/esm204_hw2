@@ -261,7 +261,7 @@ Integral: integral_0^69.79 1.78 x dx = 4,334.87 USD
 
 #### Total costs of each policy scenario
 
-Scenarios in bold are the lowest cost outcomes for each district. Considering the entire reduction (755 AF -300 AF), **all four counties would prefer a cap on water use without trading across districts.** However, county preferences could change based on how water rights are allocated to each district. In this scenario, rights were reduced by a common fraction across all districts, but if some counties were given more water rights than others (e.g., the highest consumers were given the right to a higher proportion of their initial water use), overall costs to those districts would be lower under a cap and trade scenario because they would have to abate less water use, and those districts would be more likely to prefer a cap and trade approach. 
+Scenarios in bold are the lowest cost outcomes for each district. Considering the entire reduction (755 AF -300 AF), **all four counties would prefer a cap on water use without trading across districts.** However, county preferences could change based on how water rights are allocated to each district. In this scenario, rights were reduced by a common fraction across all districts, but if some counties were given more water rights than others (e.g., the highest consumers were given the right to a higher proportion of their initial water use), overall costs to those districts would be lower under a cap and trade scenario because they would have to abate less water use, and those districts would be more likely to prefer a cap and trade approach.
 
 **Kern:** 
   - **Cap w/o trade:** $2,943.21 USD + 1,806.44 USD = **4,749.65 USD**
