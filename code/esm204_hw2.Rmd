@@ -261,7 +261,19 @@ Integral: integral_0^69.79 1.78 x dx = 4,334.87 USD
 
 #### Total costs of each policy scenario
 
+Considering the entire reduction (755 AF to 300 AF), the water districts prefer either cap and trade or tax (excluding the cost of the tax itself). Water districts prefer to use cap and trade when they sell water use rights under cap and trade vs. cap no trade, and water districts prefer the tax when they buy water use rights under cap and trade vs. cap no trade.
+
+Water district preference would change based on how water rights are allocated to each district. In this scenario, rights were reduced by a common fraction across all districts, but if some districts were given water rights to a higher proportion of their initial water use than others, those districts would have to abate less water use and their costs would be lower. In that case, those districts would be more likely to prefer a cap and trade approach.
+
+
 Scenarios in bold are the lowest cost outcomes for each district. Considering the entire reduction (755 AF -300 AF), **all four counties would prefer a cap on water use without trading across districts.** However, county preferences could change based on how water rights are allocated to each district. In this scenario, rights were reduced by a common fraction across all districts, but if some counties were given more water rights than others (e.g., the highest consumers were given the right to a higher proportion of their initial water use), overall costs to those districts would be lower under a cap and trade scenario because they would have to abate less water use, and those districts would be more likely to prefer a cap and trade approach.
+
+- **Kern** will prefer prefer cap and trade.
+- **Mojave** will prefer a tax (ignoring the cost of the tax itself, which could be returned to the water districts to make it revenue neutral).
+- **Antelope** will prefer a tax (ignoring the cost of the tax itself, which could be returned to the water districts to make it revenue neutral).
+- **Ventura** will prefer cap and trade.
+
+None of the counties prefer cap no trade. Cap no trade is the least efficient way of reaching the required reduction.
 
 **Kern:** 
   - **Cap w/o trade:** $2,943.21 USD + 1,806.44 USD = **4,749.65 USD**
@@ -284,87 +296,4 @@ Scenarios in bold are the lowest cost outcomes for each district. Considering th
   - Cap and trade: 6,069.25 USD + 5,952.21 USD = 12,021.46 USD
 
 
-
-
-```{r}
-# No longer using this approach. Making the df longer allowed the curves' x-intercepts to be visible on the graph, but I'm no longer trying to do that because the wrangling is more complicated when the df is pivoted longer
-
-# # Make the data frame longer and extend water$reduction
-# empty_df <- data.frame(matrix(ncol = 6, nrow = 115))
-# colnames(empty_df) <- c('x1', 'reduction', 'mc_kern', 'mc_mojave', 'mc_antelope', 'mc_ventura')
-# water <- rbind(water, empty_df)
-# water$reduction <- seq(0, 255, by = 1)
-```
-
-```{r}
-# CREATE MC CURVES - PRE-PIVOT LONGER
-
-# # Create vector of predicted MCs for each district
-# water$mc_predict <- water$reduction * kern_slope
-# water$mc_mojave_predict <- water$reduction * mojave_slope
-# water$mc_antelope_predict <- water$reduction * antelope_slope
-# water$mc_ventura_predict <- water$reduction * ventura_slope
-```
-
-```{r}
-# CREATE DEMAND CURVES = PRE-PIVOT LONGER
-
-# # Create demand column for each district - PRE-PIVOT-LONGER
-# water$kern_demand <- kern_slope*(150 - water$reduction)
-# water$mojave_demand <- mojave_slope*(140 - water$reduction)
-# water$antelope_demand <- antelope_slope*(220 - water$reduction)
-# water$ventura_demand <- ventura_slope*(245 - water$reduction)
-```
-
-
-```{r}
-# # Plot demand curves - PRE-PIVOT-LONGER
-# ggplot(data = water, aes(x = reduction)) +
-#   geom_line(aes(y = kern_demand, color = district)) +
-#   geom_line(aes(y = mojave_demand, color = district)) +
-#   geom_line(aes(y = antelope_demand, color = district)) +
-#   geom_line(aes(y = ventura_demand, color = district)) +
-#   ylim(0, NA) +
-#   labs(y = 'USD per acre-foot', x = 'Acre-feet used')
-```
-
-
-
-```{r}
-# TO DO
-# - Pivot water data longer so that district is a variable, then plot regressions using color = district
-
-# # Plot linear regression models
-# ggplot(data = water) +
-#   geom_line(aes(x = reduction, y = mc_kern), color = "azure3") +
-#   geom_smooth(aes(x = reduction, y = mc_kern), method = "lm", se = FALSE, color = "firebrick4") +
-#   
-#   geom_line(aes(x = reduction, y = mc_mojave), color = "azure3") +
-#   geom_smooth(aes(x = reduction, y = mc_mojave), method = "lm", se = FALSE, color = "darkolivegreen4") +
-#  
-#    geom_line(aes(x = reduction, y = mc_antelope), color = "azure3") +
-#   geom_smooth(aes(x = reduction, y = mc_antelope), method = "lm", se = FALSE, color = "darkslategray4") +
-#  
-#    geom_line(aes(x = reduction, y = mc_ventura), color = "azure3") +
-#   geom_smooth(aes(x = reduction, y = mc_ventura), method = "lm", se = FALSE, color = "goldenrod4") +
-#   
-#   theme_minimal() +
-#   labs(x = "\nAbatement quantity (AF)",
-#        y = "Marginal abatement cost (USD) \n")
-```
-
-```{r}
-# Find intecepts of MC abatement curves to calculate demand curves
-# kern_tidy <- tidy(kern_lm)
-# kern_tidy
-# 
-# antelope_tidy <- tidy(antelope_lm)
-# antelope_tidy
-# 
-# mojave_tidy <- tidy(mojave_lm)
-# mojave_tidy
-# 
-# ventura_tidy <- tidy(ventura_lm)
-# ventura_tidy
-```
 
