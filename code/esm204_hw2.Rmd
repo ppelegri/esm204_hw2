@@ -129,9 +129,11 @@ ggplot(data = water, aes(x = reduction, color = district)) +
   geom_line(aes(y = mc_predict), size = 0.8) + 
   scale_color_manual(values = c('firebrick4','darkolivegreen4', 'darkslategray4', 'goldenrod4')) +
   geom_line(aes(y = mc), alpha = 0.3) +
-  labs(x = '\n Acre-feet abated', y = 'Marginal cost of abatement ($)\n', color = 'Water district') + 
+  labs(x = '\n Acre-feet abated', y = 'Marginal cost of abatement (USD)\n', color = 'Water district') + 
   theme_minimal()
 ```
+
+**Figure 1.** Marginal cost of abating water use by water district. Actual costs are the faint lines, estimated costs by linear regression are the thicker lines.
 
 ### Question 2
 
@@ -140,9 +142,11 @@ ggplot(data = water, aes(x = reduction, color = district)) +
 ggplot(data = water, aes(x = reduction, color = district)) +
 geom_line(aes(y = demand), size = 0.8) + 
   scale_color_manual(values = c('firebrick4','darkolivegreen4', 'darkslategray4', 'goldenrod4')) +
-  labs(x = '\n Acre-feet abated', y = 'Marginal cost of abatement ($)\n', color = 'Water district') + 
+  labs(x = '\n Acre-feet used', y = 'Marginal willingness to pay (USD)\n', color = 'Water district') + 
   theme_minimal()
 ```
+
+**Figure 2.** Marginal willingness to pay for water use by water district.
 
 Based on the graph, the Antelope water district is willing to pay the most for the first acre-foot of water.
 
