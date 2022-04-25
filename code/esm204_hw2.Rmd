@@ -2,7 +2,9 @@
 title: "ESM 204 HW2"
 author: "Patrick Pelegri-O'Day, Eva Wilson, and Thomas Lenihan"
 date: "4/21/2022"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE, message = FALSE, warning = FALSE}
@@ -261,39 +263,48 @@ Integral: integral_0^69.79 1.78 x dx = 4,334.87 USD
 
 #### Total costs of each policy scenario
 
-Considering the entire reduction (755 AF to 300 AF), the water districts prefer either cap and trade or tax (excluding the cost of the tax itself). Water districts prefer to use cap and trade when they sell water use rights under cap and trade vs. cap no trade, and water districts prefer the tax when they buy water use rights under cap and trade vs. cap no trade.
+Considering the entire reduction (755 AF to 300 AF), the water districts prefer either cap and trade or tax (excluding the cost of the tax itself).  **taking into account costs incurred from the tax itself, all four counties would prefer a cap on water use with trading across districts.** Water districts prefer to use cap and trade when they sell water use rights under cap and trade vs. cap no trade, and water districts prefer the tax when they buy water use rights under cap and trade vs. cap no trade.
 
 Water district preference would change based on how water rights are allocated to each district. In this scenario, rights were reduced by a common fraction across all districts, but if some districts were given water rights to a higher proportion of their initial water use than others, those districts would have to abate less water use and their costs would be lower. In that case, those districts would be more likely to prefer a cap and trade approach.
-
-
-Scenarios in bold are the lowest cost outcomes for each district. Considering the entire reduction (755 AF -300 AF), **all four counties would prefer a cap on water use without trading across districts.** However, county preferences could change based on how water rights are allocated to each district. In this scenario, rights were reduced by a common fraction across all districts, but if some counties were given more water rights than others (e.g., the highest consumers were given the right to a higher proportion of their initial water use), overall costs to those districts would be lower under a cap and trade scenario because they would have to abate less water use, and those districts would be more likely to prefer a cap and trade approach.
 
 - **Kern** will prefer prefer cap and trade.
 - **Mojave** will prefer a tax (ignoring the cost of the tax itself, which could be returned to the water districts to make it revenue neutral).
 - **Antelope** will prefer a tax (ignoring the cost of the tax itself, which could be returned to the water districts to make it revenue neutral).
-- **Ventura** will prefer cap and trade.
+- **Ventura** will prefer a tax (ignoring the cost of the tax itself, which could be returned to the water districts to make it revenue neutral).
 
 None of the counties prefer cap no trade. Cap no trade is the least efficient way of reaching the required reduction.
 
 
 **Kern:** 
   - Cap w/o trade: $2,943.21 USD + 6,418.05 US = 9,361.26 USD
+ 
   - Tax: 18,280.90 USD + 15,263.87 USD = 33,544.77 USD
+      - Tax w/o revenues as costs:  3,368.56 + 5,478.24 = 8,846.80 USD 
+ 
   - **Cap and trade:** 2,552.78 USD + 2,928.82 USD = **5,481.60 USD**
 
 **Mojave:**
   - Cap w/o trade: $4254.45 USD + 9,276.73 USD = 13,531.18 USD
+  
   - Tax: 18,873.63 USD + 15,360.46 USD = 34,234.09 USD
+      - Tax w/o revenues as costs: 2,030.41 + 3,300.72 = 5,331.13 USD
+  
   - **Cap and trade:** 4,194.04 USD + 3,836.53 USD = **8,030.57 USD**
 
 **Antelope:**
   - Cap w/o trade: 7,907.06 USD + 17,234.88 USD = 25,141.94 USD
+ 
   - Tax: 30,495.89 USD + 24,630.75 USD = 55,090.64 USD
+       - Tax w/o revenues as costs: 2,697.22 + 4,385.73 = 7,082.95 USD
+ 
   - **Cap and trade:** 7,391.97 USD + 6,539.34 USD = **13,931.31 USD**
 
 **Ventura:** 
   - Cap w/o trade: 6,103.17 USD + 13,309. 81 USD = 19,412.98 USD
+  
   - Tax: 31,758.53 USD + 26,099.46 USD = 57,857.99 USD
+      -  Tax w/o revenues as costs: 4,334.86 + 7,046.52 = 11,381.39 USD
+  
   - **Cap and trade:** 6,069.25 USD + 5,952.21 USD = **12,021.46 USD**
 
 
