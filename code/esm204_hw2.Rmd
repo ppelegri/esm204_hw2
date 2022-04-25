@@ -212,10 +212,10 @@ magnitude of the fraction each county must reduce water usage by is 300AF/500AF 
 
 **Per district cost of abatement:** Found by taking the integral under the marginal cost abatement curves from zero to the necessary reduction in water use.
 
-  - **Kern:** integral_0^39.72 2.29 x dx = **1,806.44 USD**
-  - **Mojave:** integral_0^37.07 3.8 x dx = **2,611.23 USD**
-  - **Antelope:** integral_0^58.26 2.86 x dx = **4,853.08 USD**
-  - **Ventura:** integral_0^64.88 1.78 x dx = **3,745.92 USD**
+  - **Kern:** integral_50.7^90.42 2.29 x dx = **6,418.05 USD**
+  - **Mojave:** integral_47.32^84.39 3.8 x dx = **9,276.73 USD**
+  - **Antelope:** integral_74.36^132.62 2.86 x dx = **17,234.88 USD**
+  - **Ventura:** integral_0^64.88 1.78 x dx = **13,309. 81 USD**
 
 #### Tax on water use
 
@@ -275,25 +275,27 @@ Scenarios in bold are the lowest cost outcomes for each district. Considering th
 
 None of the counties prefer cap no trade. Cap no trade is the least efficient way of reaching the required reduction.
 
+
 **Kern:** 
-  - **Cap w/o trade:** $2,943.21 USD + 1,806.44 USD = **4,749.65 USD**
+  - Cap w/o trade: $2,943.21 USD + 6,418.05 US = 9,361.26 USD
   - Tax: 18,280.90 USD + 15,263.87 USD = 33,544.77 USD
-  - Cap and trade: 2,552.78 USD + 2,928.82 USD = 5,481.60 USD
+  - **Cap and trade:** 2,552.78 USD + 2,928.82 USD = **5,481.60 USD**
 
 **Mojave:**
-  - **Cap w/o trade:** $4254.45 USD + 2,611.23 USD = **6,865.68 USD**
+  - Cap w/o trade: $4254.45 USD + 9,276.73 USD = 13,531.18 USD
   - Tax: 18,873.63 USD + 15,360.46 USD = 34,234.09 USD
-  - Cap and trade: 4,194.04 USD + 3,836.53 USD = 8,030.57 USD
+  - **Cap and trade:** 4,194.04 USD + 3,836.53 USD = **8,030.57 USD**
 
 **Antelope:**
-  - **Cap w/o trade:** 7,907.06 USD + 4,853.08 USD = **12,760.14 USD**
+  - Cap w/o trade: 7,907.06 USD + 17,234.88 USD = 25,141.94 USD
   - Tax: 30,495.89 USD + 24,630.75 USD = 55,090.64 USD
-  - Cap and trade: 7,391.97 USD + 6,539.34 USD = 13,931.31 USD
+  - **Cap and trade:** 7,391.97 USD + 6,539.34 USD = **13,931.31 USD**
 
 **Ventura:** 
-  - **Cap w/o trade:** 6,103.17 USD + 3,745.92 USD = **9,849.09 USD**
+  - Cap w/o trade: 6,103.17 USD + 13,309. 81 USD = 19,412.98 USD
   - Tax: 31,758.53 USD + 26,099.46 USD = 57,857.99 USD
-  - Cap and trade: 6,069.25 USD + 5,952.21 USD = 12,021.46 USD
+  - **Cap and trade:** 6,069.25 USD + 5,952.21 USD = **12,021.46 USD**
+
 
 
 
